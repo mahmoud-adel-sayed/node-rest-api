@@ -1,0 +1,26 @@
+{
+  "name": "node-rest-api",
+  "version": "1.0.0",
+  "description": "this is a simple NodeJS REST API",
+  "main": "server.js",
+  "scripts": {
+    "start": "node ./server.js"
+  },
+  "author": "Mahmoud Adel",
+  "dependencies": {
+    "express": "~4.13.4",
+    "mongoose": "~4.4.8",
+    "passport": "~0.3.2",
+    "passport-http": "~0.3.0",
+    "morgan": "~1.7.0",
+    "body-parser": "~1.15.0",
+    "method-override": "~2.3.5",
+    "compression": "~1.6.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mahmoud-adel-sayed/node-rest-api.git"
+  },
+  "keywords": ["node" , "rest" , "api" , "rest api"],
+  "license": "MIT"
+}
