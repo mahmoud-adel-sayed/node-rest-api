@@ -1,6 +1,8 @@
 var mongoose = require('mongoose'),
     Posts = mongoose.model('Posts'),
-    error = require('./errors.controller');
+    error = require('./errors.controller'),
+    del = require('del'),
+  	AWS = require('../../config/aws');
 
 exports.create = function(req , res){
   var post = new Posts(req.body);
@@ -9,11 +11,25 @@ exports.create = function(req , res){
   post.save(function(err , post){
     if(err){
       var message = error.getErrorMessage2(err);
-      return res.status(400).send({ status: 'Failed' , message: message });
+      return res.status(400).send({ status: 'Failed' , statusCode: 400 , message: message });
     }else{
       res.json(post);
     }
   });
+};
+
+exports.uploadImage = function(req , res){
+  var post = req.post;
+
+  if(req.file){
+    Posts.findOneAndUpdate({_id: post._id} , { $set: {image: req.file.filename , aws: 'https://s3.amazonaws.com/mahmoudadel/'+req.file.filename} } , { new: true , runValidators: true } , function(err , profile){
+  		if(err) return res.status(400).send({ status: 'Failed' , statusCode: 400 , message: error.getErrorMessage(err) });
+      AWS.onFileUploadData(req.file.filename , req.file.path , req.file.mimetype);
+  		res.json({status: 'Success' , statusCode: 200 , image: profile.image , aws: profile.aws});
+  	});
+	}else{
+    res.status(400).send({ status: 'Failed' , statusCode: 400 , message: 'No image selected' });
+  }
 };
 
 exports.list = function(req , res){
@@ -60,13 +76,17 @@ exports.update = function(req , res){
 };
 
 exports.delete = function(req , res){
-	var post = req.post;
+	var post = req.post,
+			image = req.post.image,
+			aws = req.post.aws;
 
 	post.remove(function(err , post){
 		if(err){
       var message = error.getErrorMessage2(err);
       return res.status(400).send({ status: 'Failed' , message: message });
 		}else{
+      if(image) del.sync('public/uploads/'+ image);
+			if(aws) AWS.onFileDelete('mahmoudadel' , image);
 			res.json(post);
 		}
 	});

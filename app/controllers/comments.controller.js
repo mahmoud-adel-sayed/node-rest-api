@@ -10,7 +10,7 @@ exports.create = function(req , res){
 	comment.save(function(err , comment){
 		if(err){
       var message = error.getErrorMessage2(err);
-      return res.status(400).send({ status: 'Failed' , message: message });
+      return res.status(400).send({ status: 'Failed' , statusCode: 400 , message: message });
 		}else{
 			res.json(comment);
 		}
@@ -18,10 +18,10 @@ exports.create = function(req , res){
 };
 
 exports.list = function(req , res){
-	Comments.find({postId: req.post._id}).sort('-created').populate('userId' , 'username').exec(function(err , comments){
+	Comments.find({postId: req.post._id}).sort('-created').populate('userId' , 'username firstName lastName email').exec(function(err , comments){
 		if(err){
       var message = error.getErrorMessage2(err);
-      return res.status(400).send({ status: 'Failed' , message: message });
+      return res.status(400).send({ status: 'Failed' , statusCode: 200 , message: message });
 		}else{
 			res.json(comments);
 		}
