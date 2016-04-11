@@ -3,7 +3,8 @@ var express = require('express'),
     methodOverride = require('method-override'),
     logger = require('morgan'),
     compression = require('compression'),
-    passport = require('passport');
+    passport = require('passport'),
+    cors = require('cors');
 
 module.exports = function(){
   var app = express();
@@ -17,6 +18,7 @@ module.exports = function(){
   app.use(methodOverride());
   app.use( bodyParser.urlencoded({ extended: true }) );
   app.use( bodyParser.json() );
+  app.use(cors());
 
   app.use(passport.initialize());
 
