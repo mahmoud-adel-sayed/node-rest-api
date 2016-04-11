@@ -1,7 +1,7 @@
 # Node REST Api
 This is a simple NodeJS REST API
 
-### Installion
+### Installation
 1. You have to install [NodeJs](https://nodejs.org) first.
 2. You have to install [MongoDB](https://www.mongodb.com/).
 3. then download or clone the app.
