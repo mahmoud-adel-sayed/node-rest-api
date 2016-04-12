@@ -21,3 +21,6 @@ We do not use rate limiting in the sample but for more security reasons you can 
 
 ### App demo
 The app demo hosted on heroku [mahmoud-adel-restapi.herokuapp.com](http://mahmoud-adel-restapi.herokuapp.com/) to interact with it look at the api endpoints in app/routes directory.
+
+### Other information
+There is an ionic/cordova sample app that uses this REST Api and this is the [link](https://github.com/mahmoud-adel-sayed/ionic-app) to project sample on github.
